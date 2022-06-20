@@ -1,0 +1,11 @@
+name = "discord-pronouns-bot"
+account_id = "[CLOUDFLARE_ACCOUNT_ID]"
+workers_dev = true
+main = "./dist/worker.js"
+compatibility_date = "2022-06-19"
+kv_namespaces = [
+    { binding = "PRONOUNS_BOT_GUILD_SETTINGS", id = "[CLOUDFLARE_WORKERS_KV_ID]" }
+]
+
+[build]
+command = "npm run build"
