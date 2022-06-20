@@ -7,7 +7,7 @@ import {
   SET_ROLE,
   SET_CUSTOM_ROLE,
   VERSION,
-} from './commands';
+} from './commandDefinitions';
 import { discordApiCall } from './discordAPI';
 import { getErrorString } from './errors';
 
