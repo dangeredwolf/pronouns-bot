@@ -12,7 +12,7 @@ import {
   VERSION,
   LIST_ROLES,
   SEND_PRONOUN_PICKER,
-} from './commands';
+} from './commandDefinitions';
 
 export const CommandMap = {
   [REGISTER_GLOBAL.name]: RegisterGlobalCommand,
