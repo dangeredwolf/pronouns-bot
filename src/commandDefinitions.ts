@@ -47,7 +47,7 @@ export const SET_ROLE = {
       ],
     },
     {
-      name: 'role_id',
+      name: 'role',
       description: 'Role corresponding to the pronoun',
       type: ApplicationCommandOptionType.Role,
       required: true,
@@ -68,7 +68,7 @@ export const SET_CUSTOM_ROLE = {
       required: true,
     },
     {
-      name: 'role_id',
+      name: 'role',
       description: 'Role corresponding to the pronoun',
       type: ApplicationCommandOptionType.Role,
       required: true,
