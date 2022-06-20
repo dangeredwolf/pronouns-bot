@@ -34,10 +34,12 @@ export const registerGuildCommands = async (): Promise<Response> => {
   if (!testGuildId) {
     throw new Error('The PRONOUNS_BOT_TEST_GUILD_ID environment variable is required.');
   }
+
   const url = `/applications/${applicationId}/guilds/${testGuildId}/commands`;
   const res = await registerCommands(url, developerCommands);
   const json: any[] = (await res.json()) as any[];
   console.log(json);
+
   json.forEach(async (cmd: any) => {
     const response = await fetch(
       `/applications/${applicationId}/guilds/${testGuildId}/commands/${cmd.id}`

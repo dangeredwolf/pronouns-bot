@@ -1,5 +1,7 @@
 # Pronouns Bot (beta)
+
 [![Webpack](https://github.com/dangeredwolf/pronouns-bot/actions/workflows/webpack.yml/badge.svg)](https://github.com/dangeredwolf/pronouns-bot/actions/workflows/webpack.yml)
+
 ### A next-gen Discord bot for managing pronouns, written for Cloudflare Workers for free and low-cost hosting, world-class reliability, infinite scalability, and fast response times around the world.
 
 ![The finished prompt](https://cdn.discordapp.com/attachments/165560751363325952/988283919738736650/2022-06-19T232721.978_chrome.png)
@@ -10,19 +12,19 @@ It is built for Discord interactions, like slash commands and message components
 
 ### [Invite to your server](https://wlf.is/pronouns/invite)
 
------------------
+---
 
 This bot began with [cloudflare/worker-typescript-template](https://github.com/cloudflare/worker-typescript-template) as a template, and also took inspiration from [advaith1/activities](https://github.com/advaith1/activities) and [discord/cloudflare-sample-app](https://github.com/discord/cloudflare-sample-app) to figure out how to best set-up and use Discord Interaction APIs.
 
-Quick Start
-===========
+# Quick Start
 
 Pronouns is a decent bot to use as a basis for your own Cloudflare Workers Discord bot as it contains pretty much everything you'd need from an HTTP router to a command router to per-guild storage management.
 
 Things you need
-* A Cloudflare account, set up with Workers
-* A Cloudflare Workers KV store (We use the name PRONOUNS_BOT_GUILD_SETTINGS)
-* A Discord bot created at https://discord.com/developers
+
+- A Cloudflare account, set up with Workers
+- A Cloudflare Workers KV store (We use the name PRONOUNS_BOT_GUILD_SETTINGS)
+- A Discord bot created at https://discord.com/developers
 
 This bot uses [wrangler](https://github.com/cloudflare/wrangler), so you should familiarize yourself with it to learn how to deploy your bot.
 

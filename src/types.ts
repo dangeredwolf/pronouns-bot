@@ -1,41 +1,47 @@
-import { APIMessageApplicationCommandInteractionData, APIUserApplicationCommandInteractionData } from "discord-api-types/payloads/v10/_interactions/_applicationCommands/contextMenu";
-import { APIChatInputApplicationCommandInteractionData } from "discord-api-types/payloads/v10/_interactions/_applicationCommands/chatInput";
+import {
+  APIMessageApplicationCommandInteractionData,
+  APIUserApplicationCommandInteractionData,
+} from 'discord-api-types/payloads/v10/_interactions/_applicationCommands/contextMenu';
+import { APIChatInputApplicationCommandInteractionData } from 'discord-api-types/payloads/v10/_interactions/_applicationCommands/chatInput';
 import { APIApplicationCommandInteraction } from '../node_modules/discord-api-types/payloads/v10/_interactions/applicationCommands';
 import { APIApplicationCommandOptionChoice } from '../node_modules/discord-api-types/payloads/v10/_interactions/_applicationCommands/_chatInput/shared';
 
 export enum PronounNames {
   he = 'He/Him',
   she = 'She/Her',
-  they = "They/Them",
-  it = "It/Its",
-  any = "Any Pronouns",
-  ask = "Pronouns: Ask"
+  they = 'They/Them',
+  it = 'It/Its',
+  any = 'Any Pronouns',
+  ask = 'Pronouns: Ask',
 }
 
 export enum Pronouns {
   he = 'he',
   she = 'she',
-  they = "they",
-  it = "it",
-  any = "any",
-  ask = "ask"
+  they = 'they',
+  it = 'it',
+  any = 'any',
+  ask = 'ask',
 }
 
 export interface GuildSettings {
   roles: {
     he: string;
     she: string;
-    they: string,
-    it: string,
-    any: string,
-    ask: string
-  },
+    they: string;
+    it: string;
+    any: string;
+    ask: string;
+  };
   customRoles?: {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 }
 
-export type APIInteractionData = APIChatInputApplicationCommandInteractionData | APIUserApplicationCommandInteractionData | APIMessageApplicationCommandInteractionData;
+export type APIInteractionData =
+  | APIChatInputApplicationCommandInteractionData
+  | APIUserApplicationCommandInteractionData
+  | APIMessageApplicationCommandInteractionData;
 
 /*
   Not sure if I'm just stupid but APIApplicationCommandInteraction does not support data.options
@@ -49,8 +55,8 @@ export type APIInteractionData = APIChatInputApplicationCommandInteractionData |
 */
 export type OptionedCommandInteraction = APIApplicationCommandInteraction & {
   data: APIChatInputApplicationCommandInteractionData & {
-    options: APIApplicationCommandOptionChoice[]
-  }
+    options: APIApplicationCommandOptionChoice[];
+  };
 };
 
 /*
@@ -63,11 +69,11 @@ declare global {
   }
 }
 
-String.prototype.format = function(options: any) {
+String.prototype.format = function (options: any) {
   return this.replace(/{([^{}]+)}/g, (match: string, name: string) => {
     if (options[name] !== undefined) {
       return options[name];
     }
     return match;
   });
-}
+};
