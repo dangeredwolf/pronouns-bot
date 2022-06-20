@@ -1,6 +1,6 @@
 import { Router } from 'itty-router';
 
-import { APIPingInteraction } from 'discord-api-types/payloads/v10/_interactions/ping';
+import { APIPingInteraction } from '../node_modules/discord-api-types/payloads/v10/_interactions/ping';
 import { APIApplicationCommandInteraction } from '../node_modules/discord-api-types/payloads/v10/_interactions/applicationCommands';
 import { APIMessageComponentInteraction } from '../node_modules/discord-api-types/payloads/v10/_interactions/messageComponents';
 import {

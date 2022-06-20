@@ -1,4 +1,4 @@
-import { APIRole } from 'discord-api-types/payloads/v10/permissions';
+import { APIRole } from '../../node_modules/discord-api-types/payloads/v10/permissions';
 import { CommandResponse } from '../response';
 import { DiscordAPI } from '../discordAPI';
 import { assertGuild } from '../sanitization';

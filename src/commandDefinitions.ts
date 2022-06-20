@@ -1,9 +1,9 @@
-import { PermissionFlagsBits } from 'discord-api-types/payloads/common';
+import { PermissionFlagsBits } from '../node_modules/discord-api-types/payloads/common';
 import { PronounNames } from './types';
 import {
   ApplicationCommandType,
   ApplicationCommandOptionType,
-} from 'discord-api-types/payloads/v10/_interactions/applicationCommands';
+} from '../node_modules/discord-api-types/payloads/v10/_interactions/applicationCommands';
 
 // BigInt can't be JSON.stringified, and 1 << 5 isn't big enough to cause issues with floats anyway
 const ManageGuild = Number(PermissionFlagsBits.ManageGuild);

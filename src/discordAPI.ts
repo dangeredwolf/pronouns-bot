@@ -1,5 +1,5 @@
 import { Constants } from './constants';
-import { APIRole } from 'discord-api-types/payloads/v10/permissions';
+import { APIRole } from '../node_modules/discord-api-types/payloads/v10/permissions';
 import { NetworkError } from './errors';
 
 export const discordApiCall = async (
