@@ -1,5 +1,7 @@
 # Pronouns Bot (beta)
 
+[![Webpack](https://github.com/dangeredwolf/pronouns-bot/actions/workflows/webpack.yml/badge.svg)](https://github.com/dangeredwolf/pronouns-bot/actions/workflows/webpack.yml)
+
 A next-gen Discord bot for managing pronouns, written for Cloudflare Workers for free and low-cost hosting, world-class reliability and fast response times around the world.
 
 It's built from the ground up to rely on Discord Interactions, like slash commands and message components, so they have an experience that feels like a native part of Discord.
