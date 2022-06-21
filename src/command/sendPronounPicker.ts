@@ -2,10 +2,11 @@ import { CommandResponse } from '../response';
 import { discordApiCall } from '../discordAPI';
 import { assertGuild } from '../sanitization';
 import { Strings } from '../strings';
-import { OptionedCommandInteraction } from '../types';
+import { OptionedCommandInteraction, SpecialPronouns } from '../types';
 import { CommandFailed, getErrorString } from '../errors';
+import { getGuildPronouns } from '../roles';
 
-const createMessage = async (channel_id: string, title?: string, subtitle?: string) => {
+const createMessage = async (channel_id: string, guild_id: string, title?: string, subtitle?: string) => {
   console.log('Creating message...');
   let response = await discordApiCall(`/channels/${channel_id}/messages`, 'POST', {
     embeds: [
@@ -15,59 +16,81 @@ const createMessage = async (channel_id: string, title?: string, subtitle?: stri
         description: subtitle || Strings.PROMPT_DEFAULT_SUBTITLE,
       },
     ],
-    components: [
-      {
-        type: 1,
-        components: [
-          {
-            type: 2,
-            label: 'He/Him',
-            style: 1,
-            custom_id: 'he',
-          },
-          {
-            type: 2,
-            label: 'She/Her',
-            style: 1,
-            custom_id: 'she',
-          },
-          {
-            type: 2,
-            label: 'They/Them',
-            style: 1,
-            custom_id: 'they',
-          },
-          {
-            type: 2,
-            label: 'It/Its',
-            style: 1,
-            custom_id: 'it',
-          },
-        ],
-      },
-      {
-        type: 1,
-        components: [
-          {
-            type: 2,
-            label: 'Any Pronouns',
-            style: 2,
-            custom_id: 'any',
-          },
-          {
-            type: 2,
-            label: 'Ask me!',
-            style: 2,
-            custom_id: 'ask',
-          },
-        ],
-      },
-    ],
+    components: await buildButtonLayout(guild_id)
   });
+
+  // console.log("Button layout: ", await buildButtonLayout(guild_id));
 
   console.log('Request to create message finished, response: ', response);
   return response;
 };
+
+const buildButtonLayout = async (guild_id: string) => {
+  const pronouns = await getGuildPronouns(guild_id);
+
+  let mainBucket = [];
+  let specialBucket = [];
+
+  for (const pronoun of pronouns) {
+    if (pronoun.keyName in SpecialPronouns) {
+      specialBucket.push(pronoun);
+    } else {
+      mainBucket.push(pronoun);
+    }
+  }
+
+  let row: any[] = [];
+  let mainComponents: any[] = [];
+  let specialComponents: any[] = [];
+
+  for (const pronoun of mainBucket) {
+    if (row.length >= 5) {
+      mainComponents.push({
+        type: 1,
+        components: row,
+      });
+      row = [];
+    }
+    row.push({
+      type: 2,
+      label: pronoun.name,
+      style: 1,
+      custom_id: pronoun.keyName,
+    });
+  }
+
+  mainComponents.push({
+    type: 1,
+    components: row,
+  });
+
+  console.log("mainComponents", mainComponents);
+
+  for (const pronoun of specialBucket) {
+    if (row.length >= 5) {
+      specialComponents.push({
+        type: 1,
+        components: row,
+      });
+      row = [];
+    }
+    row.push({
+      type: 2,
+      label: pronoun.name,
+      style: 2,
+      custom_id: pronoun.keyName,
+    });
+  }
+  
+  specialComponents.push({
+    type: 1,
+    components: row,
+  });
+
+  console.log("specialComponents", specialComponents);
+
+  return mainComponents.concat(specialComponents);
+}
 
 export const SendPronounPickerCommand = async (
   interaction: OptionedCommandInteraction
@@ -84,7 +107,7 @@ export const SendPronounPickerCommand = async (
   const subtitle =
     (interaction.data.options?.[1]?.value as string) || Strings.PROMPT_DEFAULT_SUBTITLE;
 
-  let response = await createMessage(channel_id, title, subtitle);
+  let response = await createMessage(channel_id, interaction.guild_id as string, title, subtitle);
 
   if (response.ok) {
     return new CommandResponse(Strings.PROMPT_SUCCESS);

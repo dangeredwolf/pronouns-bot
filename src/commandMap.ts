@@ -1,3 +1,4 @@
+import { CreateCustomPronounCommand } from './command/createCustomRole';
 import { CreateRolesCommand } from './command/createRoles';
 import { ListRolesCommand } from './command/listRoles';
 import { RegisterGlobalCommand, RegisterGuildCommand } from './command/register';
@@ -12,6 +13,7 @@ import {
   VERSION,
   LIST_ROLES,
   SEND_PRONOUN_PICKER,
+  CREATE_CUSTOM_ROLE,
 } from './commandDefinitions';
 
 export const CommandMap = {
@@ -22,4 +24,5 @@ export const CommandMap = {
   [VERSION.name]: VersionCommand,
   [LIST_ROLES.name]: ListRolesCommand,
   [SEND_PRONOUN_PICKER.name]: SendPronounPickerCommand,
+  [CREATE_CUSTOM_ROLE.name]: CreateCustomPronounCommand,
 };

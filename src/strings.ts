@@ -34,6 +34,11 @@ export const Strings = {
   MISSING_FIELD: `❌ Missing required parameter: {field}`,
   INVALID_FIELD: `❌ Invalid parameter for {field}`,
 
+  CUSTOM_ROLE_SUCCESS: `✅ Custom pronoun role set for {pronoun}`,
+  CUSTOM_ROLE_IS_DEFAULT: `❌ Can't create a custom pronoun with the same name as a default pronoun. If you disabled it then re-enable it using **/enable_default_pronoun**`,
+  CUSTOM_ROLE_EXISTS: `Pronoun role already exists for {pronoun}`,
+  CUSTOM_ROLE_FAIL: `❌ An error occurred while setting the custom role ({error}). Please try again in a little bit.`,
+
   VERSION_INFO: `Pronouns Bot by dangered wolf#3621 <@284144747860459532>, build ${_COMMIT_HASH} (${_BUILD_DATE})`,
   COMMAND_NOT_FOUND: `❌ Unknown command: {command}`,
   UNKNOWN_COMMAND_ERROR: `❌ An unknown error occurred while processing your command. If you see this, please ping \`dangered wolf#3621\` <@284144747860459532>\n\n{error}`,

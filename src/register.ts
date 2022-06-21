@@ -7,6 +7,7 @@ import {
   SET_ROLE,
   SET_CUSTOM_ROLE,
   VERSION,
+  CREATE_CUSTOM_ROLE,
 } from './commandDefinitions';
 import { discordApiCall } from './discordAPI';
 import { getErrorString } from './errors';
@@ -16,7 +17,7 @@ const applicationId = DISCORD_APPLICATION_ID;
 const testGuildId = PRONOUNS_BOT_TEST_GUILD_ID;
 
 const publicCommands = [SET_ROLE, CREATE_ROLES, VERSION, LIST_ROLES, SEND_PRONOUN_PICKER];
-const developerCommands = [REGISTER_GLOBAL, REGISTER_GUILD, SET_CUSTOM_ROLE];
+const developerCommands = [REGISTER_GLOBAL, REGISTER_GUILD, SET_CUSTOM_ROLE, CREATE_CUSTOM_ROLE ];
 
 if (!token) {
   throw new Error('The PRONOUNS_BOT_TOKEN environment variable is required.');

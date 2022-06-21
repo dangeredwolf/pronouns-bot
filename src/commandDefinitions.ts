@@ -76,6 +76,21 @@ export const SET_CUSTOM_ROLE = {
   ],
 };
 
+export const CREATE_CUSTOM_ROLE = {
+  name: 'create_custom_pronoun',
+  type: ApplicationCommandType.ChatInput,
+  default_member_permissions: ManageGuild,
+  description: 'Create a custom pronoun with a new role',
+  options: [
+    {
+      name: 'pronoun',
+      description: 'Pronoun to create a role for',
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    }
+  ],
+};
+
 export const VERSION = {
   name: 'version',
   type: ApplicationCommandType.ChatInput,
