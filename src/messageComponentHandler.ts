@@ -20,7 +20,7 @@ export const handleMessageComponent = async (data: APIMessageComponentInteractio
     settings.roles[selectedPronoun] ||
     settings.customRoles?.[selectedPronoun]?.id ||
     (await throwNotFound());
-    
+
   return await toggleRole(
     PronounNames[selectedPronoun] || selectedPronoun,
     data.guild_id as string,

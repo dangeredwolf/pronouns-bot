@@ -1,3 +1,4 @@
+import { CommandResponse } from './response';
 import { Strings } from './strings';
 
 export class CommandInvalidError extends Error {
@@ -38,3 +39,15 @@ export class GuildOnlyCommandError extends CommandInvalidError {
 
 export const getErrorString = (response: Response): string =>
   (response as any).message || response.statusText;
+
+export const handleCommandError = async (error: Error): Promise<CommandResponse> => {
+  console.error(error);
+
+  const errString = String(error).replace(/^Error: /g, '');
+
+  if (error instanceof CommandInvalidError) {
+    return new CommandResponse(errString);
+  } else {
+    throw new CommandFailed(Strings.UNKNOWN_COMMAND_ERROR.format({ error: errString }));
+  }
+};

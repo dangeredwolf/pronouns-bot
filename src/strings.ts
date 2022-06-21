@@ -41,7 +41,11 @@ export const Strings = {
   CUSTOM_ROLE_CREATED: `✅ Created role for new pronoun {pronoun}`,
   CUSTOM_ROLE_FAIL: `❌ An error occurred while setting the custom role ({error}). Please try again in a little bit.`,
 
-  VERSION_INFO: `Pronouns Bot by dangered wolf#3621 <@284144747860459532>, build ${_COMMIT_HASH} (${_BUILD_DATE})`,
+  VERSION_INFO: `Pronouns Bot build ${_COMMIT_HASH} (${_BUILD_DATE})`,
+  VERSION_DESCRIPTION: `Made with love by dangered wolf#3621 (<@284144747860459532>)\n<:cf:988895299693080616> {cfLocation} ➡ <:discord:988895279270985760> {discordLocation}`,
+  VERSION_LOGO_URL: `https://cdn.discordapp.com/attachments/165560751363325952/988880853964832768/PronounsLogo.png`,
+  GITHUB_URL: `https://github.com/dangeredwolf/pronouns-bot`,
+  DOCS_URL: `https://wlf.is/pronouns`,
   COMMAND_NOT_FOUND: `❌ Unknown command: {command}`,
   UNKNOWN_COMMAND_ERROR: `❌ An unknown error occurred while processing your command. If you see this, please ping \`dangered wolf#3621\` <@284144747860459532>\n\n{error}`,
 };

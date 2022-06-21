@@ -14,9 +14,7 @@ import { JsonResponse } from './response';
 import { Constants } from './constants';
 import { handleMessageComponent } from './messageComponentHandler';
 import { OptionedCommandInteraction } from './types';
-import { CommandResponse } from './response';
-import { CommandFailed, CommandInvalidError } from './errors';
-import { Strings } from './strings';
+import { handleCommandError } from './errors';
 
 const router = Router();
 
@@ -27,6 +25,11 @@ router.post('/api/interactions', async (request: Request) => {
   if (!isValidRequest) {
     return new Response('Invalid signature', { status: 401 });
   }
+
+  console.log("Cloudflare: ", request.cf);
+  let headersObject = Object.fromEntries(request.headers)
+  let requestHeaders = JSON.stringify(headersObject, null, 2)
+  console.log(`Request headers: ${requestHeaders}`)
 
   const data = (await request.json()) as
     | APIPingInteraction
@@ -47,31 +50,25 @@ router.post('/api/interactions', async (request: Request) => {
       });
     }
     /*
-     *  Handles actual application commands
+     *  Handles application commands
      */
     case InteractionType.ApplicationCommand: {
       try {
-        return await routeCommand(data as OptionedCommandInteraction);
+        return await routeCommand(data as OptionedCommandInteraction, request);
       } catch (error: any) {
-        console.error(error);
-
-        const errString = String(error).replace(/^Error: /g, '');
-
-        if (error instanceof CommandInvalidError) {
-          return new CommandResponse(errString);
-        } else {
-          throw new CommandFailed(
-            Strings.UNKNOWN_COMMAND_ERROR.format({ error: errString })
-          );
-        }
+        return await handleCommandError(error);
       }
     }
 
     /*
-     *  Handles actual application commands
+     *  Handles message components
      */
     case InteractionType.MessageComponent: {
-      return await handleMessageComponent(data as APIMessageComponentInteraction);
+      try {
+        return await handleMessageComponent(data as APIMessageComponentInteraction);
+      } catch (error: any) {
+        return await handleCommandError(error);
+      }
     }
   }
 });
