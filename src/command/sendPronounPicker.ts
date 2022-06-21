@@ -35,7 +35,7 @@ const createMessage = async (
 const buildButtonLayout = async (guild_id: string) => {
   const pronouns = await getGuildPronouns(guild_id);
 
-  console.log(pronouns)
+  console.log(pronouns);
 
   if (pronouns.length === 0) {
     throw new CommandFailed(Strings.PROMPT_NO_PRONOUNS);

@@ -7,15 +7,22 @@ import { PronounNames, Pronouns } from './types';
 import { Strings } from './strings';
 import { CommandFailed, getErrorString } from './errors';
 
+const throwNotFound = async () => {
+  throw new CommandFailed(Strings.ROLE_NOT_CONFIGURED);
+};
+
 export const handleMessageComponent = async (data: APIMessageComponentInteraction) => {
   console.log(data);
   const selectedPronoun = data.data.custom_id as Pronouns;
-  const role_id = (await getGuildSettings(data.guild_id as string)).roles[
-    selectedPronoun
-  ];
+  const settings = await getGuildSettings(data.guild_id as string);
   const user = data.member as APIGuildMember;
+  const role_id =
+    settings.roles[selectedPronoun] ||
+    settings.customRoles?.[selectedPronoun]?.id ||
+    (await throwNotFound());
+    
   return await toggleRole(
-    PronounNames[selectedPronoun],
+    PronounNames[selectedPronoun] || selectedPronoun,
     data.guild_id as string,
     role_id,
     user
@@ -33,7 +40,7 @@ const processError = (response: Response, failPrompt: string): CommandResponse =
 };
 
 const toggleRole = async (
-  pronoun: PronounNames,
+  pronoun: PronounNames | string,
   guild_id: string,
   roleId: string = '0',
   member: APIGuildMember
