@@ -3,6 +3,11 @@ const webpack = require('webpack');
 
 const date = String(new Date().toISOString());
 
+let commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString()
+  .trim();
+
 module.exports = {
   entry: {
     worker: './src/server.ts',
@@ -19,6 +24,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       _BUILD_DATE: `'${date}'`,
+    }),
+    new webpack.DefinePlugin({
+      _COMMIT_HASH: `'${commitHash}'`,
     }),
   ],
   optimization: {

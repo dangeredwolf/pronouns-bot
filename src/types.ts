@@ -36,6 +36,7 @@ export interface GuildSettings {
   customRoles?: {
     [key: string]: string;
   };
+  disabledPronouns?: Pronouns[];
 }
 
 export type APIInteractionData =

@@ -1,4 +1,5 @@
 import { CommandResponse } from '../response';
+import { getGuildPronouns } from '../roles';
 import { assertGuild } from '../sanitization';
 import { getGuildSettings } from '../storage';
 import { Strings } from '../strings';
@@ -12,20 +13,19 @@ export const ListRolesCommand = async (interaction: OptionedCommandInteraction) 
 
   console.log('Guild settings: ', guildSettings);
 
-  const roles: string[] = [];
+  const roleStrings: string[] = [];
+  const roles = await getGuildPronouns(guild_id);
 
-  // If there's any missing roles referenced by us, replace them
-  for (const pronoun_str of Object.keys(guildSettings.roles)) {
-    const pronoun: Pronouns = pronoun_str as Pronouns;
-    roles.push(
+  for (let i in roles) {
+    roleStrings.push(
       Strings.LIST_ROLE_ENTRY.format({
-        pronoun: PronounNames[pronoun],
-        role_id: guildSettings.roles[pronoun],
+        pronoun: roles[i].name,
+        role_id: roles[i].roleId,
       })
     );
   }
 
   return new CommandResponse(
-    Strings.LIST_ROLES_RESULT.format({ roles: roles.join('\n') })
+    Strings.LIST_ROLES_RESULT.format({ roles: roleStrings.join('\n') })
   );
 };

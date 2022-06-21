@@ -34,7 +34,7 @@ export const Strings = {
   MISSING_FIELD: `❌ Missing required parameter: {field}`,
   INVALID_FIELD: `❌ Invalid parameter for {field}`,
 
-  VERSION_INFO: `Pronouns Bot by dangered wolf#3621 <@284144747860459532>, built ${_BUILD_DATE}`,
+  VERSION_INFO: `Pronouns Bot by dangered wolf#3621 <@284144747860459532>, build ${_COMMIT_HASH} (${_BUILD_DATE})`,
   COMMAND_NOT_FOUND: `❌ Unknown command: {command}`,
   UNKNOWN_COMMAND_ERROR: `❌ An unknown error occurred while processing your command. If you see this, please ping \`dangered wolf#3621\` <@284144747860459532>\n\n{error}`,
 };
