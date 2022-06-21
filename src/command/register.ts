@@ -1,7 +1,8 @@
 import { CommandResponse } from '../response';
-import { registerGlobalCommands, registerGuildCommands } from '../register';
+import { registerGlobalCommands } from '../register';
 import { Strings } from '../strings';
 import { CommandFailed, getErrorString } from '../errors';
+import { registerGuildCommands } from '../registerGuild';
 
 export const RegisterGuildCommand = async () => {
   const response = await registerGuildCommands();

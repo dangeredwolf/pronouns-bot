@@ -6,9 +6,14 @@ import { OptionedCommandInteraction, SpecialPronouns } from '../types';
 import { CommandFailed, getErrorString } from '../errors';
 import { getGuildPronouns } from '../roles';
 
-const createMessage = async (channel_id: string, guild_id: string, title?: string, subtitle?: string) => {
+const createMessage = async (
+  channel_id: string,
+  guild_id: string,
+  title?: string,
+  subtitle?: string
+) => {
   console.log('Creating message...');
-  let response = await discordApiCall(`/channels/${channel_id}/messages`, 'POST', {
+  let thingy = {
     embeds: [
       {
         type: 'rich',
@@ -16,8 +21,10 @@ const createMessage = async (channel_id: string, guild_id: string, title?: strin
         description: subtitle || Strings.PROMPT_DEFAULT_SUBTITLE,
       },
     ],
-    components: await buildButtonLayout(guild_id)
-  });
+    components: await buildButtonLayout(guild_id),
+  };
+  console.log(thingy);
+  let response = await discordApiCall(`/channels/${channel_id}/messages`, 'POST', thingy);
 
   // console.log("Button layout: ", await buildButtonLayout(guild_id));
 
@@ -27,6 +34,12 @@ const createMessage = async (channel_id: string, guild_id: string, title?: strin
 
 const buildButtonLayout = async (guild_id: string) => {
   const pronouns = await getGuildPronouns(guild_id);
+
+  console.log(pronouns)
+
+  if (pronouns.length === 0) {
+    throw new CommandFailed(Strings.PROMPT_NO_PRONOUNS);
+  }
 
   let mainBucket = [];
   let specialBucket = [];
@@ -57,14 +70,17 @@ const buildButtonLayout = async (guild_id: string) => {
       style: 1,
       custom_id: pronoun.keyName,
     });
+    console.log(row);
   }
 
-  mainComponents.push({
-    type: 1,
-    components: row,
-  });
+  if (row.length > 0) {
+    mainComponents.push({
+      type: 1,
+      components: row,
+    });
+  }
 
-  console.log("mainComponents", mainComponents);
+  row = [];
 
   for (const pronoun of specialBucket) {
     if (row.length >= 5) {
@@ -81,16 +97,16 @@ const buildButtonLayout = async (guild_id: string) => {
       custom_id: pronoun.keyName,
     });
   }
-  
-  specialComponents.push({
-    type: 1,
-    components: row,
-  });
 
-  console.log("specialComponents", specialComponents);
+  if (row.length > 0) {
+    specialComponents.push({
+      type: 1,
+      components: row,
+    });
+  }
 
   return mainComponents.concat(specialComponents);
-}
+};
 
 export const SendPronounPickerCommand = async (
   interaction: OptionedCommandInteraction
@@ -107,7 +123,12 @@ export const SendPronounPickerCommand = async (
   const subtitle =
     (interaction.data.options?.[1]?.value as string) || Strings.PROMPT_DEFAULT_SUBTITLE;
 
-  let response = await createMessage(channel_id, interaction.guild_id as string, title, subtitle);
+  let response = await createMessage(
+    channel_id,
+    interaction.guild_id as string,
+    title,
+    subtitle
+  );
 
   if (response.ok) {
     return new CommandResponse(Strings.PROMPT_SUCCESS);

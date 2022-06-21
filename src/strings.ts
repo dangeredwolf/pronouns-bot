@@ -5,6 +5,7 @@ export const Strings = {
   PROMPT_MISSING_ACCESS: `❌ I don't have permission to create a prompt in this server. Please ensure that I have permission to View Channel, Send Message, and Embed Links`,
   PROMPT_UNKNOWN_ERROR: `❌ I couldn't create the pronoun picker message for you ({error}). Please try again later.`,
   PROMPT_SUCCESS: `✅ I successfully created the pronoun picker message for you.`,
+  PROMPT_NO_PRONOUNS: `You haven't configured any pronouns yet. You can bind existing roles to pronouns using  **/set_pronouns_role**, or generate new roles using **/create_roles**.`,
 
   PROMPT_DEFAULT_TITLE: `👋 Hi, I can set pronouns for you`,
   PROMPT_DEFAULT_SUBTITLE: `Setting your pronouns lets everyone on the server know how to address you.`,
@@ -37,6 +38,7 @@ export const Strings = {
   CUSTOM_ROLE_SUCCESS: `✅ Custom pronoun role set for {pronoun}`,
   CUSTOM_ROLE_IS_DEFAULT: `❌ Can't create a custom pronoun with the same name as a default pronoun. If you disabled it then re-enable it using **/enable_default_pronoun**`,
   CUSTOM_ROLE_EXISTS: `Pronoun role already exists for {pronoun}`,
+  CUSTOM_ROLE_CREATED: `✅ Created role for new pronoun {pronoun}`,
   CUSTOM_ROLE_FAIL: `❌ An error occurred while setting the custom role ({error}). Please try again in a little bit.`,
 
   VERSION_INFO: `Pronouns Bot by dangered wolf#3621 <@284144747860459532>, build ${_COMMIT_HASH} (${_BUILD_DATE})`,

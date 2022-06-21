@@ -87,7 +87,7 @@ export const CREATE_CUSTOM_ROLE = {
       description: 'Pronoun to create a role for',
       type: ApplicationCommandOptionType.String,
       required: true,
-    }
+    },
   ],
 };
 

@@ -1,57 +1,19 @@
 import {
   CREATE_ROLES,
   LIST_ROLES,
-  REGISTER_GLOBAL,
-  REGISTER_GUILD,
   SEND_PRONOUN_PICKER,
   SET_ROLE,
-  SET_CUSTOM_ROLE,
   VERSION,
-  CREATE_CUSTOM_ROLE,
 } from './commandDefinitions';
 import { discordApiCall } from './discordAPI';
 import { getErrorString } from './errors';
-
-const token = PRONOUNS_BOT_TOKEN;
-const applicationId = DISCORD_APPLICATION_ID;
-const testGuildId = PRONOUNS_BOT_TEST_GUILD_ID;
+import { registerGuildCommands } from './registerGuild';
 
 const publicCommands = [SET_ROLE, CREATE_ROLES, VERSION, LIST_ROLES, SEND_PRONOUN_PICKER];
-const developerCommands = [REGISTER_GLOBAL, REGISTER_GUILD, SET_CUSTOM_ROLE, CREATE_CUSTOM_ROLE ];
 
-if (!token) {
-  throw new Error('The PRONOUNS_BOT_TOKEN environment variable is required.');
-}
-if (!applicationId) {
+if (!DISCORD_APPLICATION_ID) {
   throw new Error('The PRONOUNS_BOT_APPLICATION_ID environment variable is required.');
 }
-
-/**
- * Register all commands with a specific guild/server. Useful during initial
- * development and testing.
- */
-
-export const registerGuildCommands = async (): Promise<Response> => {
-  if (!testGuildId) {
-    throw new Error('The PRONOUNS_BOT_TEST_GUILD_ID environment variable is required.');
-  }
-
-  const url = `/applications/${applicationId}/guilds/${testGuildId}/commands`;
-  const res = await registerCommands(url, developerCommands);
-  const json: any[] = (await res.json()) as any[];
-  console.log(json);
-
-  json.forEach(async (cmd: any) => {
-    const response = await fetch(
-      `/applications/${applicationId}/guilds/${testGuildId}/commands/${cmd.id}`
-    );
-    if (!response.ok) {
-      console.error(`Problem removing command ${cmd.id}`);
-    }
-  });
-
-  return res;
-};
 
 /**
  * Register all commands globally.  This can take o(minutes), so wait until
@@ -59,7 +21,7 @@ export const registerGuildCommands = async (): Promise<Response> => {
  */
 
 export const registerGlobalCommands = async (): Promise<Response> => {
-  const url = `/applications/${applicationId}/commands`;
+  const url = `/applications/${DISCORD_APPLICATION_ID}/commands`;
   return await registerCommands(url, publicCommands);
 };
 

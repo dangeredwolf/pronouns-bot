@@ -25,18 +25,18 @@ export enum Pronouns {
 }
 
 export const DefaultPronounNames: { [index: string]: true } = {
-  "He/Him": true,
-  "She/Her": true,
-  "They/Them": true,
-  "It/Its": true,
-  "Any Pronouns": true,
-  "Pronouns: Ask": true,
-}
+  'He/Him': true,
+  'She/Her': true,
+  'They/Them': true,
+  'It/Its': true,
+  'Any Pronouns': true,
+  'Pronouns: Ask': true,
+};
 
 export const SpecialPronouns = {
   [Pronouns.any]: true,
   [Pronouns.ask]: true,
-}
+};
 
 export interface GuildSettings {
   roles: {
