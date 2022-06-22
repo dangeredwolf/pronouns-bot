@@ -8,8 +8,9 @@ export const VersionCommand = async (_interaction: any, request: Request) => {
   console.log("sdfsdfsdfsdfds");
 
   const discordLocation = `${request?.cf?.city}, ${request?.cf?.regionCode}, ${request?.cf?.country}`;
-  // TODO: Find Worker location
-
+  const workerLocation = await fetch(
+    'https://serverlocation.toast.workers.dev/'
+  ).then((res) => res.text()).catch(() => "");
 
   const response = {
     type: InteractionResponseType.ChannelMessageWithSource,
@@ -18,7 +19,7 @@ export const VersionCommand = async (_interaction: any, request: Request) => {
         {
           type: 'rich',
           title: Strings.VERSION_INFO,
-          description: Strings.VERSION_DESCRIPTION.format({ discordLocation: discordLocation, cfLocation: "" }),
+          description: Strings.VERSION_DESCRIPTION.format({ discordLocation: discordLocation, cfLocation: workerLocation }),
           image: {
             url: Strings.VERSION_LOGO_URL,
           },
