@@ -30,6 +30,7 @@ export const Strings = {
   ROLE_REMOVE_FAIL: `❌ An error occurred while removing the role ({error}). Please try again in a little bit.`,
   ROLE_NOT_CONFIGURED: `❌ This pronoun hasn't been configured yet. If you manage this server, use the **/set_role** command to add existing pronoun roles to the bot or **/create_roles** to create new roles.\n\nView full docs at ${Constants.DOCS_URL}`,
   ROLE_NO_PERMISSION: `❌ I don't have permission to manage roles. Please give me the Manage Roles permission so I can work.`,
+  ROLE_TOO_HIGH: `❌ I can't assign this role because it's higher than my highest role. If you're an admin, please fix this by moving my role above the roles of your pronouns so I can assign them.`,
 
   GENERIC_GUILD_MISSING: `You can only use this command in a server.`,
   MISSING_FIELD: `❌ Missing required parameter: {field}`,
@@ -42,7 +43,7 @@ export const Strings = {
   CUSTOM_ROLE_FAIL: `❌ An error occurred while setting the custom role ({error}). Please try again in a little bit.`,
 
   VERSION_INFO: `Pronouns Bot build ${_COMMIT_HASH} (${_BUILD_DATE})`,
-  VERSION_DESCRIPTION: `Made with love by dangered wolf#3621 (<@284144747860459532>)\n<:cf:988895299693080616> {cfLocation} ➡ <:discord:988895279270985760> {discordLocation}`,
+  VERSION_DESCRIPTION: `Made with love by dangered wolf#3621 (<@284144747860459532>)\n\n<:cf:988895299693080616> {cfLocation} ➡ <:discord:988895279270985760> {discordLocation}`,
   VERSION_LOGO_URL: `https://cdn.discordapp.com/attachments/165560751363325952/988880853964832768/PronounsLogo.png`,
   GITHUB_URL: `https://github.com/dangeredwolf/pronouns-bot`,
   DOCS_URL: `https://wlf.is/pronouns`,

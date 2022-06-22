@@ -4,6 +4,8 @@ import { assertGuild } from '../sanitization';
 import { getGuildSettings, setGuildSettings } from '../storage';
 import { Strings } from '../strings';
 import { OptionedCommandInteraction, PronounNames, Pronouns } from '../types';
+import { DiscordAPI } from '../discordAPI';
+import { registerGuildCommands } from '../registerGuild';
 
 export const SetPronounsRoleCommand = async (interaction: OptionedCommandInteraction) => {
   assertGuild(interaction);
@@ -39,7 +41,14 @@ export const SetPronounsRoleCommand = async (interaction: OptionedCommandInterac
 
   let settings = await getGuildSettings(interaction.guild_id as string);
   settings.roles[pronoun] = options[1].value as string;
+  await registerGuildCommands(interaction.guild_id as string);
   await setGuildSettings(interaction.guild_id as string, settings);
+
+  // DiscordAPI.getRoles(interaction.guild_id as string).then(roles => {
+  //   const role = roles.find(r => r.id === settings.roles[pronoun]);
+  //   let position = role?.position || 0;
+
+  // })
 
   return new CommandResponse(
     Strings.SET_ROLE_SUCCESS.format({

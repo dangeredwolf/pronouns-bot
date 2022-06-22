@@ -35,6 +35,8 @@ const processError = (response: Response, failPrompt: string): CommandResponse =
     throw new CommandFailed(Strings.ROLE_NOT_CONFIGURED);
   } else if (message === 'Missing Permissions' || message === 'Missing Access') {
     throw new CommandFailed(Strings.ROLE_NO_PERMISSION);
+  } else if (message === 'Forbidden') {
+    throw new CommandFailed(Strings.ROLE_TOO_HIGH);
   }
   throw new CommandFailed(failPrompt.format({ error: message }));
 };

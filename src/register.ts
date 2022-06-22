@@ -43,5 +43,5 @@ export const registerCommands = async (
 
 export const doRegisterCommands = async () => {
   await registerGlobalCommands();
-  await registerGuildCommands();
+  await registerGuildCommands(PRONOUNS_BOT_TEST_GUILD_ID);
 };
