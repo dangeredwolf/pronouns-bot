@@ -19,8 +19,6 @@ export const CreateCustomPronounCommand = async (
   const guildSettings = await getGuildSettings(guild_id);
 
   const pronounName: string = options?.pronoun?.value as string;
-  // @ts-ignore TODO: see if this actually returns as a string or boolean
-  console.log('Special?', options?.special?.value);
   const special: boolean = Boolean(options?.special?.value);
 
   let roleMap = {} as { [role_id: string]: boolean };

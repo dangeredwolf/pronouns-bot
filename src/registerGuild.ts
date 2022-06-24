@@ -1,19 +1,23 @@
 import { REGISTER_GLOBAL, REGISTER_GUILD } from './commandDefinitions';
 
-const developerCommands = [REGISTER_GLOBAL, REGISTER_GUILD];
+const developerCommands: any[] = [REGISTER_GLOBAL, REGISTER_GUILD];
 
 const testGuildId = PRONOUNS_BOT_TEST_GUILD_ID;
 import { registerCommands } from './register';
 import {
   ApplicationCommandType,
   ApplicationCommandOptionType,
+  APIApplicationCommand, 
 } from '../node_modules/discord-api-types/payloads/v10/_interactions/applicationCommands';
 import { PermissionFlagsBits } from '../node_modules/discord-api-types/payloads/common';
 import { getGuildPronouns } from './roles';
 
-const ManageGuild = Number(PermissionFlagsBits.ManageGuild);
+const ManageGuild = String(PermissionFlagsBits.ManageGuild);
 
-export const DELETE_ROLE = {
+// @ts-ignore Despite Discord API docs, some of the "required" properties are optional. Even Discord doesn't use all of them.
+// https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+// https://github.com/discord/cloudflare-sample-app/blob/main/src/commands.js#L6
+export const DELETE_ROLE: APIApplicationCommand = {
   name: 'delete_role',
   type: ApplicationCommandType.ChatInput,
   default_member_permissions: ManageGuild,
@@ -28,7 +32,10 @@ export const DELETE_ROLE = {
   ],
 };
 
-export const UNASSIGN_ROLE = {
+// @ts-ignore Despite Discord API docs, some of the "required" properties are optional. Even Discord doesn't use all of them.
+// https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+// https://github.com/discord/cloudflare-sample-app/blob/main/src/commands.js#L6
+export const UNASSIGN_ROLE: APIApplicationCommand = {
   name: 'unassign_role',
   type: ApplicationCommandType.ChatInput,
   default_member_permissions: ManageGuild,
@@ -52,35 +59,31 @@ export const registerGuildCommands = async (guild_id: string): Promise<Response>
     throw new Error('The PRONOUNS_BOT_TEST_GUILD_ID environment variable is required.');
   }
 
-  let commands = [];
+  let commands: APIApplicationCommand[] = [];
 
   let guildDeleteRole = DELETE_ROLE;
   let guildUnassignRole = UNASSIGN_ROLE;
+  let guildDeleteRoleOption = guildDeleteRole?.options?.[0] as any;
+  let guildUnassignRoleOption = guildUnassignRole?.options?.[0] as any;
   let roleOptions: any[] = [];
   let roles = await getGuildPronouns(guild_id);
 
   console.log(roleOptions);
 
-  guildDeleteRole.options[0].choices = [];
-  guildUnassignRole.options[0].choices = [];
+  guildDeleteRoleOption.choices = [];
+  guildUnassignRoleOption.choices = [];
 
   // Create an option for each role
   roles.forEach(role => {
-    guildDeleteRole.options[0].choices.push({
-      // @ts-ignore TODO: Figure out type of commands
+    guildDeleteRoleOption.choices.push({
       name: role.name,
-      // @ts-ignore TODO: Figure out type of commands
       description: `${role.name} Pronoun`,
-      // @ts-ignore TODO: Figure out type of commands
       value: role.name,
     });
 
-    guildUnassignRole.options[0].choices.push({
-      // @ts-ignore TODO: Figure out type of commands
+    guildUnassignRoleOption.choices.push({
       name: role.name,
-      // @ts-ignore TODO: Figure out type of commands
       description: `${role.name} Pronoun`,
-      // @ts-ignore TODO: Figure out type of commands
       value: role.name,
     });
   });
@@ -90,7 +93,6 @@ export const registerGuildCommands = async (guild_id: string): Promise<Response>
 
   const url = `/applications/${DISCORD_APPLICATION_ID}/guilds/${testGuildId}/commands`;
   if (guild_id === PRONOUNS_BOT_TEST_GUILD_ID) {
-    // @ts-ignore TODO: Figure out type of commands
     commands = commands.concat(developerCommands);
   }
   const res = await registerCommands(url, commands);
