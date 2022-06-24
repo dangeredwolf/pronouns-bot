@@ -5,7 +5,7 @@ import { CommandFailed, getErrorString } from '../errors';
 import { registerGuildCommands } from '../registerGuild';
 
 export const RegisterGuildCommand = async () => {
-  const response = await registerGuildCommands();
+  const response = await registerGuildCommands(PRONOUNS_BOT_TEST_GUILD_ID);
 
   if (response.ok) {
     return new CommandResponse(Strings.GUILD_COMMAND_REGISTER_SUCCESS);

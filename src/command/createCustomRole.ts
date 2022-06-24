@@ -4,13 +4,9 @@ import { DiscordAPI } from '../discordAPI';
 import { assertGuild } from '../sanitization';
 import { getGuildSettings, setGuildSettings } from '../storage';
 import { Strings } from '../strings';
-import {
-  OptionedCommandInteraction,
-  PronounNames,
-  Pronouns,
-  DefaultPronounNames,
-} from '../types';
-import { CommandFailed, getErrorString } from '../errors';
+import { OptionedCommandInteraction } from '../types';
+import { CommandFailed } from '../errors';
+import { registerGuildCommands } from '../registerGuild';
 
 export const CreateCustomPronounCommand = async (
   interaction: OptionedCommandInteraction
@@ -26,20 +22,14 @@ export const CreateCustomPronounCommand = async (
   let roleMap = {} as { [role_id: string]: boolean };
 
   for (let id in roles) {
-    roleMap[roles[id].id] = true;
+    roleMap[roles[id]?.id] = true;
   }
 
-  if (typeof guildSettings.customRoles === 'undefined') {
-    guildSettings.customRoles = {};
+  if (typeof guildSettings.roles === 'undefined') {
+    guildSettings.roles = {};
   }
 
-  let existingRole = guildSettings.customRoles[pronounName];
-
-  if (DefaultPronounNames[pronounName] === true) {
-    throw new CommandFailed(
-      Strings.CUSTOM_ROLE_IS_DEFAULT.format({ pronoun: pronounName })
-    );
-  }
+  let existingRole = guildSettings.roles[pronounName];
 
   if (typeof existingRole !== 'undefined' && roleMap[existingRole.id] === true) {
     throw new CommandFailed(Strings.CUSTOM_ROLE_EXISTS.format({ pronoun: pronounName }));
@@ -47,9 +37,14 @@ export const CreateCustomPronounCommand = async (
 
   const createRoleResponse = await DiscordAPI.createRole(guild_id, pronounName);
   const role: APIRole = await createRoleResponse.json();
-  guildSettings.customRoles[pronounName] = { id: role.id };
+  guildSettings.roles[pronounName] = { id: role.id };
 
   await setGuildSettings(guild_id, guildSettings);
+  try {
+    await registerGuildCommands(interaction.guild_id as string);
+  } catch (e) {
+    console.log(e);
+  }
 
   return new CommandResponse(
     Strings.CUSTOM_ROLE_CREATED.format({ pronoun: pronounName })

@@ -3,9 +3,9 @@ import { APIGuildMember } from '../node_modules/discord-api-types/payloads/v10/g
 import { CommandResponse } from './response';
 import { discordApiCall } from './discordAPI';
 import { getGuildSettings } from './storage';
-import { PronounNames, Pronouns } from './types';
 import { Strings } from './strings';
 import { CommandFailed, getErrorString } from './errors';
+import { sanitizePronoun } from './sanitization';
 
 const throwNotFound = async () => {
   throw new CommandFailed(Strings.ROLE_NOT_CONFIGURED);
@@ -13,20 +13,15 @@ const throwNotFound = async () => {
 
 export const handleMessageComponent = async (data: APIMessageComponentInteraction) => {
   console.log(data);
-  const selectedPronoun = data.data.custom_id as Pronouns;
+  const selectedPronoun = sanitizePronoun(data.data.custom_id as string);
   const settings = await getGuildSettings(data.guild_id as string);
   const user = data.member as APIGuildMember;
-  const role_id =
-    settings.roles[selectedPronoun] ||
-    settings.customRoles?.[selectedPronoun]?.id ||
-    (await throwNotFound());
+  console.log('settings.roles', settings.roles);
+  console.log('settings.roles[selectedPronoun]', settings.roles[selectedPronoun]);
+  console.log('selectedPronoun', selectedPronoun);
+  const role_id = settings.roles[selectedPronoun].id || (await throwNotFound());
 
-  return await toggleRole(
-    PronounNames[selectedPronoun] || selectedPronoun,
-    data.guild_id as string,
-    role_id,
-    user
-  );
+  return await toggleRole(selectedPronoun, data.guild_id as string, role_id, user);
 };
 
 const processError = (response: Response, failPrompt: string): CommandResponse => {
@@ -42,7 +37,7 @@ const processError = (response: Response, failPrompt: string): CommandResponse =
 };
 
 const toggleRole = async (
-  pronoun: PronounNames | string,
+  pronoun: string,
   guild_id: string,
   roleId: string = '0',
   member: APIGuildMember

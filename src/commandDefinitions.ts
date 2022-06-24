@@ -1,5 +1,4 @@
 import { PermissionFlagsBits } from '../node_modules/discord-api-types/payloads/common';
-import { PronounNames } from './types';
 import {
   ApplicationCommandType,
   ApplicationCommandOptionType,
@@ -19,53 +18,6 @@ export const SET_ROLE = {
       description: 'Pronoun to assign the role to',
       type: ApplicationCommandOptionType.String,
       required: true,
-      choices: [
-        {
-          name: 'He/Him',
-          value: PronounNames.he,
-        },
-        {
-          name: 'She/Her',
-          value: PronounNames.she,
-        },
-        {
-          name: 'They/Them',
-          value: PronounNames.they,
-        },
-        {
-          name: 'It/Its',
-          value: PronounNames.it,
-        },
-        {
-          name: 'Any Pronouns',
-          value: PronounNames.any,
-        },
-        {
-          name: 'Pronouns: Ask',
-          value: PronounNames.ask,
-        },
-      ],
-    },
-    {
-      name: 'role',
-      description: 'Role corresponding to the pronoun',
-      type: ApplicationCommandOptionType.Role,
-      required: true,
-    },
-  ],
-};
-
-export const SET_CUSTOM_ROLE = {
-  name: 'set_custom_pronoun',
-  type: ApplicationCommandType.ChatInput,
-  default_member_permissions: ManageGuild,
-  description: 'Assign a role to a custom pronoun',
-  options: [
-    {
-      name: 'pronoun',
-      description: 'Pronoun to assign the role to',
-      type: ApplicationCommandOptionType.String,
-      required: true,
     },
     {
       name: 'role',
@@ -77,7 +29,7 @@ export const SET_CUSTOM_ROLE = {
 };
 
 export const CREATE_CUSTOM_ROLE = {
-  name: 'create_custom_pronoun',
+  name: 'create_pronoun',
   type: ApplicationCommandType.ChatInput,
   default_member_permissions: ManageGuild,
   description: 'Create a custom pronoun with a new role',

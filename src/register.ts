@@ -3,13 +3,21 @@ import {
   LIST_ROLES,
   SEND_PRONOUN_PICKER,
   SET_ROLE,
+  CREATE_CUSTOM_ROLE,
   VERSION,
 } from './commandDefinitions';
 import { discordApiCall } from './discordAPI';
 import { getErrorString } from './errors';
 import { registerGuildCommands } from './registerGuild';
 
-const publicCommands = [SET_ROLE, CREATE_ROLES, VERSION, LIST_ROLES, SEND_PRONOUN_PICKER];
+const publicCommands = [
+  SET_ROLE,
+  CREATE_ROLES,
+  VERSION,
+  LIST_ROLES,
+  CREATE_CUSTOM_ROLE,
+  SEND_PRONOUN_PICKER,
+];
 
 if (!DISCORD_APPLICATION_ID) {
   throw new Error('The PRONOUNS_BOT_APPLICATION_ID environment variable is required.');

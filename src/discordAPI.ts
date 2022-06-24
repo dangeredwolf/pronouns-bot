@@ -29,7 +29,7 @@ export const DiscordAPI = {
   },
   getRole: async (guildId: string, roleId: string): Promise<APIRole | null> => {
     const roles = await DiscordAPI.getRoles(guildId);
-    return roles.find((role) => role.id === roleId) || null;
+    return roles.find(role => role.id === roleId) || null;
   },
   createRole: async (guildId: string, name: string): Promise<Response> => {
     console.log('Creating role...');
@@ -41,10 +41,7 @@ export const DiscordAPI = {
   },
   deleteRole: async (guildId: string, roleId: string): Promise<Response> => {
     console.log('Deleting role...');
-    let response = await discordApiCall(
-      `/guilds/${guildId}/roles/${roleId}`,
-      'DELETE'
-    );
+    let response = await discordApiCall(`/guilds/${guildId}/roles/${roleId}`, 'DELETE');
     return response;
-  }
+  },
 };

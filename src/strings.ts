@@ -33,14 +33,17 @@ export const Strings = {
   ROLE_TOO_HIGH: `❌ I can't assign this role because it's higher than my highest role. If you're an admin, please fix this by moving my role above the roles of your pronouns so I can assign them.`,
 
   GENERIC_GUILD_MISSING: `You can only use this command in a server.`,
+  GENERIC_MISSING_FIELD: `❌ Missing required parameter`,
   MISSING_FIELD: `❌ Missing required parameter: {field}`,
   INVALID_FIELD: `❌ Invalid parameter for {field}`,
 
-  CUSTOM_ROLE_SUCCESS: `✅ Custom pronoun role set for {pronoun}`,
-  CUSTOM_ROLE_IS_DEFAULT: `❌ Can't create a custom pronoun with the same name as a default pronoun. If you disabled it then re-enable it using **/enable_default_pronoun**`,
+  CUSTOM_ROLE_SUCCESS: `✅ Role set for {pronoun}`,
   CUSTOM_ROLE_EXISTS: `Pronoun role already exists for {pronoun}`,
   CUSTOM_ROLE_CREATED: `✅ Created role for new pronoun {pronoun}`,
-  CUSTOM_ROLE_FAIL: `❌ An error occurred while setting the custom role ({error}). Please try again in a little bit.`,
+  CUSTOM_ROLE_FAIL: `❌ An error occurred while setting role ({error}). Please try again in a little bit.`,
+
+  DELETE_ROLE_SUCCESS: `✅ Deleted role {name}`,
+  DELETE_ROLE_MISSING: `ℹ It seems that role was already deleted, so we removed it from your list of roles.`,
 
   VERSION_INFO: `Pronouns Bot build ${_COMMIT_HASH} (${_BUILD_DATE})`,
   VERSION_DESCRIPTION: `Made with love by dangered wolf#3621 (<@284144747860459532>)\n\n<:cf:988895299693080616> {cfLocation} ➡ <:discord:988895279270985760> {discordLocation}`,

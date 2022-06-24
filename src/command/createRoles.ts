@@ -4,8 +4,9 @@ import { DiscordAPI } from '../discordAPI';
 import { assertGuild } from '../sanitization';
 import { getGuildSettings, setGuildSettings } from '../storage';
 import { Strings } from '../strings';
-import { OptionedCommandInteraction, PronounNames, Pronouns } from '../types';
+import { OptionedCommandInteraction } from '../types';
 import { CommandFailed, getErrorString } from '../errors';
+import { registerGuildCommands } from '../registerGuild';
 
 export const CreateRolesCommand = async (interaction: OptionedCommandInteraction) => {
   assertGuild(interaction);
@@ -17,32 +18,34 @@ export const CreateRolesCommand = async (interaction: OptionedCommandInteraction
   console.log('Roles found: ', roles);
   console.log('Guild settings: ', guildSettings);
 
+  let createdPronouns: string[] = [];
+
   let roleMap = {} as { [role_id: string]: boolean };
 
-  let createdPronouns: PronounNames[] = [];
-
   roles.forEach(role => {
-    roleMap[role.id] = true;
+    roleMap[role?.id] = true;
   });
 
-  // If there's any missing roles referenced by us, replace them
-  for (const pronoun_str of Object.keys(guildSettings.roles)) {
-    const pronoun: Pronouns = pronoun_str as Pronouns;
-
-    if (roleMap[guildSettings.roles[pronoun]] !== true) {
-      const createRoleResponse = await DiscordAPI.createRole(guild_id, pronoun);
-      const role: APIRole = await createRoleResponse.json();
-      console.log(role);
-      guildSettings.roles[pronoun] = role.id;
-      createdPronouns.push(PronounNames[pronoun]);
+  // If there's any missing roles referenced by us, delete them
+  for (const pronoun in guildSettings.roles) {
+    if (roleMap[guildSettings.roles[pronoun]?.id] !== true) {
+      delete guildSettings.roles[pronoun];
     }
   }
 
-  // Create roles that are completely missing
-  for (const pronoun_str of Object.keys(Pronouns)) {
-    const pronoun: Pronouns = pronoun_str as Pronouns;
+  const DefaultPronouns = [
+    'He/Him',
+    'She/Her',
+    'They/Them',
+    'It/Its',
+    'Any Pronouns',
+    'Pronouns: Ask',
+  ];
 
-    if (typeof guildSettings.roles[pronoun as Pronouns] === 'undefined') {
+  // Create roles that are completely missing
+  for (let pronoun_num in DefaultPronouns) {
+    const pronoun = DefaultPronouns[pronoun_num];
+    if (roleMap[guildSettings.roles[pronoun]?.id] !== true) {
       const createRoleResponse = await DiscordAPI.createRole(guild_id, pronoun);
       const role: APIRole = await createRoleResponse.json();
 
@@ -54,13 +57,23 @@ export const CreateRolesCommand = async (interaction: OptionedCommandInteraction
         );
       }
 
+      if (pronoun === 'Pronouns: Ask' || pronoun === 'Any Pronouns') {
+        guildSettings.roles[pronoun] = { id: role.id, special: true };
+      } else {
+        guildSettings.roles[pronoun] = { id: role.id };
+      }
+
       console.log(role);
-      guildSettings.roles[pronoun] = role.id;
-      createdPronouns.push(PronounNames[pronoun]);
+      createdPronouns.push(pronoun);
     }
   }
 
   await setGuildSettings(guild_id, guildSettings);
+  try {
+    await registerGuildCommands(interaction.guild_id as string);
+  } catch (e) {
+    console.log(e);
+  }
 
   if (createdPronouns.length > 0) {
     return new CommandResponse(

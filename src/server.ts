@@ -1,5 +1,26 @@
 import { Router } from 'itty-router';
 
+/*
+  Useful little function to format strings for us
+*/
+
+declare global {
+  interface String {
+    format(options: any): string;
+  }
+}
+
+String.prototype.format = function (options: any) {
+  return this.replace(/{([^{}]+)}/g, (match: string, name: string) => {
+    if (options[name] !== undefined) {
+      return options[name];
+    }
+    return match;
+  });
+};
+
+import { OptionedCommandInteraction } from './types';
+
 import { APIPingInteraction } from '../node_modules/discord-api-types/payloads/v10/_interactions/ping';
 import { APIApplicationCommandInteraction } from '../node_modules/discord-api-types/payloads/v10/_interactions/applicationCommands';
 import { APIMessageComponentInteraction } from '../node_modules/discord-api-types/payloads/v10/_interactions/messageComponents';
@@ -13,7 +34,6 @@ import { routeCommand } from './commandRouter';
 import { JsonResponse } from './response';
 import { Constants } from './constants';
 import { handleMessageComponent } from './messageComponentHandler';
-import { OptionedCommandInteraction } from './types';
 import { handleCommandError } from './errors';
 
 const router = Router();
@@ -26,10 +46,10 @@ router.post('/api/interactions', async (request: Request) => {
     return new Response('Invalid signature', { status: 401 });
   }
 
-  console.log("Cloudflare: ", request.cf);
-  let headersObject = Object.fromEntries(request.headers)
-  let requestHeaders = JSON.stringify(headersObject, null, 2)
-  console.log(`Request headers: ${requestHeaders}`)
+  console.log('Cloudflare: ', request.cf);
+  let headersObject = Object.fromEntries(request.headers);
+  let requestHeaders = JSON.stringify(headersObject, null, 2);
+  console.log(`Request headers: ${requestHeaders}`);
 
   const data = (await request.json()) as
     | APIPingInteraction

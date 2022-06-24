@@ -1,15 +1,6 @@
-import {
-  REGISTER_GLOBAL,
-  REGISTER_GUILD,
-  SET_CUSTOM_ROLE,
-  CREATE_CUSTOM_ROLE,
-} from './commandDefinitions';
-const developerCommands = [
-  REGISTER_GLOBAL,
-  REGISTER_GUILD,
-  SET_CUSTOM_ROLE,
-  CREATE_CUSTOM_ROLE,
-];
+import { REGISTER_GLOBAL, REGISTER_GUILD } from './commandDefinitions';
+
+const developerCommands = [REGISTER_GLOBAL, REGISTER_GUILD];
 
 const testGuildId = PRONOUNS_BOT_TEST_GUILD_ID;
 import { registerCommands } from './register';
@@ -31,10 +22,8 @@ export const DELETE_ROLE = {
     {
       name: 'pronoun',
       description: 'Pronoun to delete',
-      type: ApplicationCommandOptionType.Subcommand,
-      choices: [
-        
-      ],
+      type: ApplicationCommandOptionType.String,
+      choices: [],
     },
   ],
 };
@@ -55,24 +44,29 @@ export const registerGuildCommands = async (guild_id: string): Promise<Response>
   let roles = await getGuildPronouns(guild_id);
 
   console.log(roleOptions);
-  
+
+  guildDeleteRole.options[0].choices = [];
+
   // Create an option for each role
-  roles.forEach((role) => {
+  roles.forEach(role => {
     guildDeleteRole.options[0].choices.push({
       // @ts-ignore TODO: Figure out type of commands
       name: role.name,
       // @ts-ignore TODO: Figure out type of commands
       description: `${role.name} Pronoun`,
       // @ts-ignore TODO: Figure out type of commands
-      value: role.name
+      value: role.name,
     });
   });
 
   commands.push(guildDeleteRole);
 
   const url = `/applications/${DISCORD_APPLICATION_ID}/guilds/${testGuildId}/commands`;
-  // @ts-ignore TODO: Figure out type of commands
-  const res = await registerCommands(url, commands.concat(developerCommands));
+  if (guild_id === PRONOUNS_BOT_TEST_GUILD_ID) {
+    // @ts-ignore TODO: Figure out type of commands
+    commands = commands.concat(developerCommands);
+  }
+  const res = await registerCommands(url, commands);
   const json: any[] = (await res.json()) as any[];
   console.log(json);
 

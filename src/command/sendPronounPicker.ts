@@ -2,7 +2,7 @@ import { CommandResponse } from '../response';
 import { discordApiCall } from '../discordAPI';
 import { assertGuild } from '../sanitization';
 import { Strings } from '../strings';
-import { OptionedCommandInteraction, SpecialPronouns } from '../types';
+import { OptionedCommandInteraction } from '../types';
 import { CommandFailed, getErrorString } from '../errors';
 import { getGuildPronouns } from '../roles';
 
@@ -45,7 +45,7 @@ const buildButtonLayout = async (guild_id: string) => {
   let specialBucket = [];
 
   for (const pronoun of pronouns) {
-    if (pronoun.keyName in SpecialPronouns) {
+    if (pronoun.special) {
       specialBucket.push(pronoun);
     } else {
       mainBucket.push(pronoun);

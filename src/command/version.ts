@@ -3,14 +3,18 @@ import { InteractionResponseType } from '../../node_modules/discord-api-types/pa
 import { MessageFlags } from '../../node_modules/discord-api-types/payloads/v10/channel';
 import { Strings } from '../strings';
 
-export const VersionCommand = async (_interaction: any, request: Request) => {
+export const VersionCommand = async (
+  _interaction: any,
+  _options: any,
+  request: Request
+) => {
   console.log(request);
-  console.log("sdfsdfsdfsdfds");
+  console.log('sdfsdfsdfsdfds');
 
   const discordLocation = `${request?.cf?.city}, ${request?.cf?.regionCode}, ${request?.cf?.country}`;
-  const workerLocation = await fetch(
-    'https://serverlocation.toast.workers.dev/'
-  ).then((res) => res.text()).catch(() => "");
+  const workerLocation = await fetch('https://serverlocation.toast.workers.dev/')
+    .then(res => res.text())
+    .catch(() => '');
 
   const response = {
     type: InteractionResponseType.ChannelMessageWithSource,
@@ -19,12 +23,16 @@ export const VersionCommand = async (_interaction: any, request: Request) => {
         {
           type: 'rich',
           title: Strings.VERSION_INFO,
-          description: Strings.VERSION_DESCRIPTION.format({ discordLocation: discordLocation, cfLocation: workerLocation }),
+          description: Strings.VERSION_DESCRIPTION.format({
+            discordLocation: discordLocation,
+            cfLocation: workerLocation,
+          }),
           image: {
             url: Strings.VERSION_LOGO_URL,
           },
         },
       ],
+      flags: MessageFlags.Ephemeral,
       components: [
         {
           type: 1,
@@ -40,12 +48,12 @@ export const VersionCommand = async (_interaction: any, request: Request) => {
               label: 'Docs',
               style: 5,
               url: Strings.DOCS_URL,
-            }
+            },
           ],
-        }
+        },
       ],
-    }
-  }
+    },
+  };
   console.log(response);
   return new JsonResponse(response);
 };
