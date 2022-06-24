@@ -12,9 +12,6 @@ export const VersionCommand = async (
   console.log('sdfsdfsdfsdfds');
 
   const discordLocation = `${request?.cf?.city}, ${request?.cf?.regionCode}, ${request?.cf?.country}`;
-  const workerLocation = await fetch('https://serverlocation.toast.workers.dev/')
-    .then(res => res.text())
-    .catch(() => '');
 
   const response = {
     type: InteractionResponseType.ChannelMessageWithSource,
@@ -25,7 +22,7 @@ export const VersionCommand = async (
           title: Strings.VERSION_INFO,
           description: Strings.VERSION_DESCRIPTION.format({
             discordLocation: discordLocation,
-            cfLocation: workerLocation,
+            cfLocation: "",
           }),
           image: {
             url: Strings.VERSION_LOGO_URL,
