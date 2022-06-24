@@ -2,7 +2,7 @@ import { CommandResponse } from '../response';
 import { discordApiCall } from '../discordAPI';
 import { assertGuild } from '../sanitization';
 import { Strings } from '../strings';
-import { OptionedCommandInteraction } from '../types';
+import { OptionedCommandInteraction, OptionsList } from '../types';
 import { CommandFailed, getErrorString } from '../errors';
 import { getGuildPronouns } from '../roles';
 
@@ -109,7 +109,8 @@ const buildButtonLayout = async (guild_id: string) => {
 };
 
 export const SendPronounPickerCommand = async (
-  interaction: OptionedCommandInteraction
+  interaction: OptionedCommandInteraction,
+  options: OptionsList
 ) => {
   assertGuild(interaction);
 
@@ -118,10 +119,8 @@ export const SendPronounPickerCommand = async (
   console.log('Channel ID: ', interaction.channel_id);
   console.log('Options: ', interaction.data.options);
 
-  const title =
-    (interaction.data.options?.[0]?.value as string) || Strings.PROMPT_DEFAULT_TITLE;
-  const subtitle =
-    (interaction.data.options?.[1]?.value as string) || Strings.PROMPT_DEFAULT_SUBTITLE;
+  const title = (options.title?.value as string) || Strings.PROMPT_DEFAULT_TITLE;
+  const subtitle = (options.subtitle?.value as string) || Strings.PROMPT_DEFAULT_SUBTITLE;
 
   let response = await createMessage(
     channel_id,

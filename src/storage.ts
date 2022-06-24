@@ -75,7 +75,10 @@ export const getGuildSettings = async (guild_id: string): Promise<GuildSettings>
   return guildSettings;
 };
 
-export const setGuildSettings = async (guild_id: string, settings: GuildSettings) => {
+export const setGuildSettings: any = async (
+  guild_id: string,
+  settings: GuildSettings
+) => {
   // If any custom pronouns have enums from regular roles, remove them
   return await PRONOUNS_BOT_GUILD_SETTINGS.put(guild_id, JSON.stringify(settings));
 };

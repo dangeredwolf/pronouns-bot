@@ -25,11 +25,18 @@ export const SET_ROLE = {
       type: ApplicationCommandOptionType.Role,
       required: true,
     },
+    {
+      name: 'special',
+      description:
+        'True = Display separately from other pronouns (used for Any Pronouns/Pronouns: Ask)',
+      type: ApplicationCommandOptionType.Boolean,
+      required: false,
+    },
   ],
 };
 
 export const CREATE_CUSTOM_ROLE = {
-  name: 'create_pronoun',
+  name: 'create_role',
   type: ApplicationCommandType.ChatInput,
   default_member_permissions: ManageGuild,
   description: 'Create a custom pronoun with a new role',
@@ -39,6 +46,13 @@ export const CREATE_CUSTOM_ROLE = {
       description: 'Pronoun to create a role for',
       type: ApplicationCommandOptionType.String,
       required: true,
+    },
+    {
+      name: 'special',
+      description:
+        'True = Display separately from other pronouns (used for Any Pronouns/Pronouns: Ask)',
+      type: ApplicationCommandOptionType.Boolean,
+      required: false,
     },
   ],
 };
@@ -51,10 +65,11 @@ export const VERSION = {
 };
 
 export const CREATE_ROLES = {
-  name: 'create_roles',
+  name: 'create_default_roles',
   type: ApplicationCommandType.ChatInput,
   default_member_permissions: ManageGuild,
-  description: 'Automatically creates any missing roles for pronouns in the guild',
+  description:
+    'Create these default roles: He/Him, She/Her, They/Them, It/Its, Any Pronouns, Pronouns: Ask',
 };
 
 export const REGISTER_GLOBAL = {

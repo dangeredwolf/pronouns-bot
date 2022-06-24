@@ -45,6 +45,8 @@ export const Strings = {
   DELETE_ROLE_SUCCESS: `✅ Deleted role {name}`,
   DELETE_ROLE_MISSING: `ℹ It seems that role was already deleted, so we removed it from your list of roles.`,
 
+  UNASSIGN_ROLE_SUCCESS: `✅ Unassigned role {name}`,
+
   VERSION_INFO: `Pronouns Bot build ${_COMMIT_HASH} (${_BUILD_DATE})`,
   VERSION_DESCRIPTION: `Made with love by dangered wolf#3621 (<@284144747860459532>)\n\n<:cf:988895299693080616> {cfLocation} ➡ <:discord:988895279270985760> {discordLocation}`,
   VERSION_LOGO_URL: `https://cdn.discordapp.com/attachments/165560751363325952/988880853964832768/PronounsLogo.png`,
