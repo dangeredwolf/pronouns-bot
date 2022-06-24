@@ -5,7 +5,7 @@ export const Strings = {
   PROMPT_MISSING_ACCESS: `❌ I don't have permission to create a prompt in this server. Please ensure that I have permission to View Channel, Send Message, and Embed Links`,
   PROMPT_UNKNOWN_ERROR: `❌ I couldn't create the pronoun picker message for you ({error}). Please try again later.`,
   PROMPT_SUCCESS: `✅ I successfully created the pronoun picker message for you.`,
-  PROMPT_NO_PRONOUNS: `You haven't configured any pronouns yet. You can bind existing roles to pronouns using  **/set_pronouns_role**, or generate new roles using **/create_roles**.`,
+  PROMPT_NO_PRONOUNS: `You haven't configured any pronouns yet. You can bind existing roles to pronouns using  **/set_role**, or generate new roles using **/create_roles**.`,
 
   PROMPT_DEFAULT_TITLE: `👋 Hi, I can set pronouns for you`,
   PROMPT_DEFAULT_SUBTITLE: `Setting your pronouns lets everyone on the server know how to address you.`,
@@ -15,7 +15,7 @@ export const Strings = {
   GLOBAL_COMMAND_REGISTER_SUCCESS: `✅ Re-registered global commands`,
   GLOBAL_COMMAND_REGISTER_FAIL: `❌ Failed to re-register global commands: {error}`,
 
-  LIST_ROLES_RESULT: `Here are the roles I know about:\n\n{roles}\n\nAny deleted or missing roles? Use **/set_pronouns_role** to configure existing roles with this bot or **/create_role** to create new roles.`,
+  LIST_ROLES_RESULT: `Here are the roles I know about:\n\n{roles}\n\nAny deleted or missing roles? Use **/set_role** to configure existing roles with this bot or **/create_role** to create new roles.`,
   LIST_ROLE_ENTRY: `{pronoun}: <@&{role_id}>`,
 
   CREATE_ROLES_SUCCESS: `✅ I created pronoun roles for {pronounList}`,
