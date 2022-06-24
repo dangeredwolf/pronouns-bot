@@ -46,11 +46,14 @@ export const CreateCustomPronounCommand = async (
   }
 
   await setGuildSettings(guild_id, guildSettings);
-  try {
-    await registerGuildCommands(interaction.guild_id as string);
-  } catch (e) {
-    console.log(e);
-  }
+  
+  setTimeout(async () => {
+    try {
+      await registerGuildCommands(interaction.guild_id as string);
+    } catch (e) {
+      console.log(e);
+    }
+  })
 
   return new CommandResponse(
     Strings.CUSTOM_ROLE_CREATED.format({ pronoun: pronounName })
