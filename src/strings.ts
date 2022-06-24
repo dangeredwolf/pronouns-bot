@@ -15,7 +15,7 @@ export const Strings = {
   GLOBAL_COMMAND_REGISTER_SUCCESS: `✅ Re-registered global commands`,
   GLOBAL_COMMAND_REGISTER_FAIL: `❌ Failed to re-register global commands: {error}`,
 
-  LIST_ROLES_RESULT: `Here are the roles I know about:\n\n{roles}\n\nAny deleted or missing roles? Use **/set_pronouns_role** to configure existing roles with this bot or **/create_roles** to create new roles.`,
+  LIST_ROLES_RESULT: `Here are the roles I know about:\n\n{roles}\n\nAny deleted or missing roles? Use **/set_pronouns_role** to configure existing roles with this bot or **/create_role** to create new roles.`,
   LIST_ROLE_ENTRY: `{pronoun}: <@&{role_id}>`,
 
   CREATE_ROLES_SUCCESS: `✅ I created pronoun roles for {pronounList}`,
@@ -28,7 +28,7 @@ export const Strings = {
   ROLE_ADD_FAIL: `❌ An error occurred while adding the role ({error}). Please try again in a little bit.`,
   ROLE_REMOVE_SUCCESS: `✅ You no longer have the **{pronoun}** pronoun role.`,
   ROLE_REMOVE_FAIL: `❌ An error occurred while removing the role ({error}). Please try again in a little bit.`,
-  ROLE_NOT_CONFIGURED: `❌ This pronoun hasn't been configured yet. If you manage this server, use the **/set_role** command to add existing pronoun roles to the bot or **/create_roles** to create new roles.\n\nView full docs at ${Constants.DOCS_URL}`,
+  ROLE_NOT_CONFIGURED: `❌ This pronoun hasn't been configured yet. If you manage this server, use the **/set_role** command to add existing pronoun roles to the bot or **/create_role** to create new roles.\n\nView full docs at ${Constants.DOCS_URL}`,
   ROLE_NO_PERMISSION: `❌ I don't have permission to manage roles. Please give me the Manage Roles permission so I can work.`,
   ROLE_TOO_HIGH: `❌ I can't assign this role because it's higher than my highest role. If you're an admin, please fix this by moving my role above the roles of your pronouns so I can assign them.`,
 
@@ -48,7 +48,7 @@ export const Strings = {
   UNASSIGN_ROLE_SUCCESS: `✅ Unassigned role {name}`,
 
   VERSION_INFO: `Pronouns Bot build ${_COMMIT_HASH} (${_BUILD_DATE})`,
-  VERSION_DESCRIPTION: `Made with love by dangered wolf#3621 (<@284144747860459532>)\n\n<:cf:988895299693080616> {cfLocation} ➡ <:discord:988895279270985760> {discordLocation}`,
+  VERSION_DESCRIPTION: `Made with love by dangered wolf#3621 (<@284144747860459532>)\n\n<:cf:988895299693080616> ➡ <:discord:988895279270985760> {discordLocation}`,
   VERSION_LOGO_URL: `https://cdn.discordapp.com/attachments/165560751363325952/988880853964832768/PronounsLogo.png`,
   GITHUB_URL: `https://github.com/dangeredwolf/pronouns-bot`,
   DOCS_URL: `https://wlf.is/pronouns`,
