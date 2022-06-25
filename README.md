@@ -1,4 +1,4 @@
-# Pronouns Bot
+# Pronouns
 
 [![Webpack](https://github.com/dangeredwolf/pronouns-bot/actions/workflows/webpack.yml/badge.svg)](https://github.com/dangeredwolf/pronouns-bot/actions/workflows/webpack.yml)
 
