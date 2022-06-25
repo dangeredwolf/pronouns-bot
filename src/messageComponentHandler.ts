@@ -19,7 +19,7 @@ export const handleMessageComponent = async (data: APIMessageComponentInteractio
   console.log('settings.roles', settings.roles);
   console.log('settings.roles[selectedPronoun]', settings.roles[selectedPronoun]);
   console.log('selectedPronoun', selectedPronoun);
-  const role_id = settings.roles[selectedPronoun].id || (await throwNotFound());
+  const role_id = settings.roles[selectedPronoun]?.id || (await throwNotFound());
 
   return await toggleRole(selectedPronoun, data.guild_id as string, role_id, user);
 };

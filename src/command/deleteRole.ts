@@ -52,11 +52,13 @@ export const DeleteRoleCommand = async (
   }
 
   await deleteExtraneousRole(guildId, roleOption, guildSettings);
-  try {
-    await registerGuildCommands(interaction.guild_id as string);
-  } catch (e) {
-    console.log(e);
-  }
+  setTimeout(async () => {
+    try {
+      await registerGuildCommands(interaction.guild_id as string);
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
   if (role) {
     return new CommandResponse(Strings.DELETE_ROLE_SUCCESS.format({ name: role.name }));

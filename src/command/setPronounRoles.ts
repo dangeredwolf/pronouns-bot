@@ -20,9 +20,13 @@ export const SetPronounsRoleCommand = async (
   if (specialOption) {
     settings.roles[pronounOption].special = true;
   }
-  try {
-    await registerGuildCommands(interaction.guild_id as string);
-  } catch (e) {}
+  setTimeout(async () => {
+    try {
+      await registerGuildCommands(interaction.guild_id as string);
+    } catch (e) {
+      console.log(e);
+    }
+  });
   await setGuildSettings(interaction.guild_id as string, settings);
 
   return new CommandResponse(

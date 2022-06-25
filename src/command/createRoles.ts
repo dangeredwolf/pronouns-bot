@@ -69,11 +69,13 @@ export const CreateRolesCommand = async (interaction: OptionedCommandInteraction
   }
 
   await setGuildSettings(guild_id, guildSettings);
-  try {
-    await registerGuildCommands(interaction.guild_id as string);
-  } catch (e) {
-    console.log(e);
-  }
+  setTimeout(async () => {
+    try {
+      await registerGuildCommands(interaction.guild_id as string);
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
   if (createdPronouns.length > 0) {
     return new CommandResponse(

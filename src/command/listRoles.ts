@@ -13,11 +13,13 @@ export const ListRolesCommand = async (interaction: OptionedCommandInteraction) 
   const roleStrings: string[] = [];
   const roles = await getGuildPronouns(guild_id);
 
-  try {
-    await registerGuildCommands(interaction.guild_id as string);
-  } catch (e) {
-    console.log(e);
-  }
+  setTimeout(async () => {
+    try {
+      await registerGuildCommands(interaction.guild_id as string);
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
   for (let i in roles) {
     roleStrings.push(

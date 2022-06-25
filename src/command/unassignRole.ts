@@ -32,11 +32,13 @@ export const UnassignRoleCommand = async (
   delete guildSettings.roles[roleOption];
 
   await deleteExtraneousRole(guildId, roleOption, guildSettings);
-  try {
-    await registerGuildCommands(interaction.guild_id as string);
-  } catch (e) {
-    console.log(e);
-  }
+  setTimeout(async () => {
+    try {
+      await registerGuildCommands(interaction.guild_id as string);
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
   return new CommandResponse(Strings.UNASSIGN_ROLE_SUCCESS.format({ name: roleOption }));
 };
