@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "discord-api-types": "^0.37.5",
-    "itty-router": "^2.6.1"
+    "itty-router": "^2.6.6"
   }
 }
